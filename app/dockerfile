@@ -1,0 +1,19 @@
+FROM python:3.8.13-slim
+
+
+# PYTHONUNBUFFERED: Prevents Python from buffering stdout and stderr (equivalent to python -u option)
+ENV PYTHONUNBUFFERED 1
+
+RUN mkdir /server
+WORKDIR /server
+
+# TODO: move this to requirements.txt or use poetry
+RUN pip
+RUN pip install flask
+RUN pip install requests
+
+COPY . /code/
+EXPOSE 80
+
+CMD ["EXPORT", "no_proxy=172.0.0.1"]
+CMD ["python", "/code/app.py"]
